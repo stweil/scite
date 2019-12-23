@@ -33,6 +33,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef MAC_INTEGRATION
+#include <gtkosxapplication.h>
+#endif //MAC_INTEGRATION
+
 #include "ILexer.h"
 
 #include "ScintillaTypes.h"
@@ -740,6 +744,9 @@ protected:
 
 public:
 
+#ifdef MAC_INTEGRATION
+	static GtkosxApplication *theApp;
+#endif
 	// TODO: get rid of this - use callback argument to find SciTEGTK
 	static SciTEGTK *instance;
 
@@ -770,6 +777,7 @@ public:
 	void SetStartupTime(const char *timestamp);
 };
 
+GtkosxApplication *SciTEGTK::theApp;
 SciTEGTK *SciTEGTK::instance;
 
 SciTEGTK::SciTEGTK(Extension *ext) : SciTEBase(ext) {
@@ -3835,7 +3843,9 @@ void SciTEGTK::CreateMenu() {
 	                                      {"/File/File8", "", menuSig, fileStackCmdID + 8, 0},
 	                                      {"/File/File9", "", menuSig, fileStackCmdID + 9, 0},
 	                                      {"/File/sep3", NULL, NULL, 0, "<Separator>"},
+#ifndef MAC_INTEGRATION
 	                                      {"/File/E_xit", "", menuSig, IDM_QUIT, 0},
+#endif
 
 	                                      {"/_Edit", NULL, NULL, 0, "<Branch>"},
 	                                      {"/Edit/_Undo", "<control>Z", menuSig, IDM_UNDO, 0},
@@ -5100,7 +5110,13 @@ void SciTEGTK::CreateUI() {
 	g_object_unref(provider);
 #endif
 
+#ifdef MAC_INTEGRATION
+	gtk_widget_hide(menuBar);
+	gtkosx_application_set_menu_bar(gtkosx_application_get(), GTK_MENU_SHELL(menuBar));
+#endif //MAC_INTEGRATION
+
 	UIAvailable();
+	gtkosx_application_ready(theApp);
 }
 
 void SciTEGTK::FindIncrementSetColour(bool valid) {
@@ -5461,6 +5477,9 @@ int main(int argc, char *argv[]) {
 	gtk_init(&argc, &argv);
 
 	SciTEGTK scite(extender);
+#ifdef MAC_INTEGRATION
+	scite.theApp = (GtkosxApplication *)g_object_new(GTKOSX_TYPE_APPLICATION, NULL);
+#endif
 	scite.SetStartupTime(timestamp);
 	scite.Run(argc, argv);
 	scite.Finalise();

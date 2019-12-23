@@ -23,10 +23,20 @@ else # CLANG
 MISLEADING=-Wno-misleading-indentation
 endif # CLANG
 
+UNAME:=$(shell uname -s)
+
 ifdef GTK3
+ifeq ($(UNAME), Darwin)
+GTKVERSION=gtk-mac-integration-gtk3
+else
 GTKVERSION=gtk+-3.0
+endif
+else
+ifeq ($(UNAME), Darwin)
+GTKVERSION=gtk-mac-integration-gtk2
 else
 GTKVERSION=gtk+-2.0
+endif
 endif
 
 # For the Gnome desktop stuff to work, prefix must point to where Gnome thinks it is.
@@ -48,7 +58,7 @@ SYSCONF_PATH=$(prefix)/share/scite
 
 INSTALL=install
 
-PROG	= $(srcdir)/../bin/SciTE
+PROG = $(srcdir)/../bin/SciTE
 
 all: $(PROG)
 
@@ -87,7 +97,6 @@ endif
 
 CXXTFLAGS:=$(CXXTFLAGS)
 
-UNAME:=$(shell uname -s)
 ifeq ($(UNAME), Linux)
 LIBDL:=-ldl
 LUACFLAGS:=-DLUA_USE_DLOPEN
