@@ -12,12 +12,16 @@ ifdef CLANG
 # thread also need to create Position Independent Executable -> search online documentation
 SANITIZE = address
 #SANITIZE = undefined
-CXX = clang++ -fsanitize=$(SANITIZE) -Wno-deprecated-register
-CC = clang -fsanitize=$(SANITIZE)
+CXX = clang++ -Wno-deprecated-register
+CC = clang
+ifdef DEBUG
+CXX += -fsanitize=$(SANITIZE)
+CC += -fsanitize=$(SANITIZE)
+endif # DEBUG
 CCWARNINGS = -Wno-empty-body -Wno-string-plus-int
-else
+else # CLANG
 MISLEADING=-Wno-misleading-indentation
-endif
+endif # CLANG
 
 ifdef GTK3
 GTKVERSION=gtk+-3.0
@@ -123,7 +127,11 @@ ExportHTML.o ExportPDF.o ExportRTF.o ExportTEX.o ExportXML.o \
 MatchMarker.o StringHelpers.o \
 PropSetFile.o MultiplexExtension.o DirectorExtension.o SciTEProps.o StyleDefinition.o StyleWriter.o Utf8_16.o \
 	JobQueue.o GTKMutex.o IFaceTable.o $(COMPLIB) $(LUA_OBJS)
+ifdef CLANG
+	$(CXX) `$(CONFIGTHREADS)` -rdynamic -DGTK $^ -o $@ $(CONFIGLIB) $(LIBDL) $(LDLIBS) -lm -lstdc++
+else
 	$(CXX) `$(CONFIGTHREADS)` -rdynamic -Wl,--as-needed -Wl,--version-script $(srcdir)/lua.vers -DGTK $^ -o $@ $(CONFIGLIB) $(LIBDL) $(LDLIBS) -lm -lstdc++
+endif
 
 # Automatically generate header dependencies with "make deps"
 include deps.mak
