@@ -34,6 +34,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #ifdef MAC_INTEGRATION
+#include <CoreFoundation/CoreFoundation.h>
 #include <gtkosxapplication.h>
 #endif //MAC_INTEGRATION
 
@@ -911,8 +912,31 @@ GtkWidget *SciTEGTK::AddMBButton(GtkWidget *dialog, const char *label,
 	return button;
 }
 
+#ifdef MAC_INTEGRATION
+static const char *GetResourcePath() {
+	const char *where = nullptr;
+	CFBundleRef bundle = CFBundleGetMainBundle();
+	if (bundle != nullptr) {
+		CFURLRef bundleURL = CFBundleCopyResourcesDirectoryURL(bundle);
+		static char path[PATH_MAX];
+		Boolean success = CFURLGetFileSystemRepresentation(bundleURL, TRUE, (UInt8 *)path, PATH_MAX - 13);
+		if (success) {
+			where = path;
+			strcat(path, "/share/scite");
+		}
+		CFRelease(bundleURL);
+	}
+	return where;
+}
+#endif
+
 FilePath SciTEGTK::GetDefaultDirectory() {
 	const char *where = getenv("SciTE_HOME");
+#ifdef MAC_INTEGRATION
+	if (!where) {
+		where = GetResourcePath();
+	}
+#endif
 #ifdef SYSCONF_PATH
 	if (!where) {
 		where = SYSCONF_PATH;
@@ -931,6 +955,11 @@ FilePath SciTEGTK::GetDefaultDirectory() {
 
 FilePath SciTEGTK::GetSciteDefaultHome() {
 	const char *where = getenv("SciTE_HOME");
+#ifdef MAC_INTEGRATION
+	if (!where) {
+		where = GetResourcePath();
+	}
+#endif
 #ifdef SYSCONF_PATH
 	if (!where) {
 		where = SYSCONF_PATH;
@@ -1426,6 +1455,10 @@ void SciTEGTK::CheckMenus() {
 		gtk_widget_set_sensitive(btnCompile, !jobQueue.IsExecuting());
 		gtk_widget_set_sensitive(btnStop, jobQueue.IsExecuting());
 	}
+
+#ifdef MAC_INTEGRATION
+	gtkosx_application_sync_menubar(theApp);
+#endif
 }
 
 /**
@@ -3805,14 +3838,14 @@ void SciTEGTK::CreateMenu() {
 	GCallback menuSig = G_CALLBACK(MenuSignal);
 	SciTEItemFactoryEntry menuItems[] = {
 	                                      {"/_File", NULL, NULL, 0, "<Branch>"},
-	                                      {"/File/_New", "<control>N", menuSig, IDM_NEW, 0},
-	                                      {"/File/_Open...", "<control>O", menuSig, IDM_OPEN, 0},
-	                                      {"/File/Open Selected _Filename", "<control><shift>O", menuSig, IDM_OPENSELECTED, 0},
-	                                      {"/File/_Revert", "<control>R", menuSig, IDM_REVERT, 0},
-	                                      {"/File/_Close", "<control>W", menuSig, IDM_CLOSE, 0},
-	                                      {"/File/_Save", "<control>S", menuSig, IDM_SAVE, 0},
-	                                      {"/File/Save _As...", "<control><shift>S", menuSig, IDM_SAVEAS, 0},
-	                                      {"/File/Save a Cop_y...", "<control><shift>P", menuSig, IDM_SAVEACOPY, 0},
+	                                      {"/File/_New", "<Primary>N", menuSig, IDM_NEW, 0},
+	                                      {"/File/_Open...", "<Primary>O", menuSig, IDM_OPEN, 0},
+	                                      {"/File/Open Selected _Filename", "<Primary><shift>O", menuSig, IDM_OPENSELECTED, 0},
+	                                      {"/File/_Revert", "<Primary>R", menuSig, IDM_REVERT, 0},
+	                                      {"/File/_Close", "<Primary>W", menuSig, IDM_CLOSE, 0},
+	                                      {"/File/_Save", "<Primary>S", menuSig, IDM_SAVE, 0},
+	                                      {"/File/Save _As...", "<Primary><shift>S", menuSig, IDM_SAVEAS, 0},
+	                                      {"/File/Save a Cop_y...", "<Primary><shift>P", menuSig, IDM_SAVEACOPY, 0},
 	                                      {"/File/Copy Pat_h", NULL, menuSig, IDM_COPYPATH, 0},
 	                                      {"/File/Encodin_g", NULL, NULL, 0, "<Branch>"},
 	                                      {"/File/Encoding/_Code Page Property", NULL, menuSig, IDM_ENCODING_DEFAULT, "<RadioItem>"},
@@ -3827,7 +3860,7 @@ void SciTEGTK::CreateMenu() {
 	                                      {"/File/Export/As _LaTeX...", NULL, menuSig, IDM_SAVEASTEX, 0},
 	                                      {"/File/Export/As _XML...", NULL, menuSig, IDM_SAVEASXML, 0},
 	                                      {"/File/Page Set_up", NULL, menuSig, IDM_PRINTSETUP, 0},
-	                                      {"/File/_Print", "<control>P", menuSig, IDM_PRINT, 0},
+	                                      {"/File/_Print", "<Primary>P", menuSig, IDM_PRINT, 0},
 	                                      {"/File/sep1", NULL, NULL, 0, "<Separator>"},
 	                                      {"/File/_Load Session...", "", menuSig, IDM_LOADSESSION, 0},
 	                                      {"/File/Sa_ve Session...", "", menuSig, IDM_SAVESESSION, 0},
@@ -3848,24 +3881,23 @@ void SciTEGTK::CreateMenu() {
 #endif
 
 	                                      {"/_Edit", NULL, NULL, 0, "<Branch>"},
-	                                      {"/Edit/_Undo", "<control>Z", menuSig, IDM_UNDO, 0},
-
-	                                      {"/Edit/_Redo", "<control>Y", menuSig, IDM_REDO, 0},
+	                                      {"/Edit/_Undo", "<Primary>Z", menuSig, IDM_UNDO, 0},
+	                                      {"/Edit/_Redo", "<Primary>Y", menuSig, IDM_REDO, 0},
 	                                      {"/Edit/sep1", NULL, NULL, 0, "<Separator>"},
-	                                      {"/Edit/Cu_t", "<control>X", menuSig, IDM_CUT, 0},
-	                                      {"/Edit/_Copy", "<control>C", menuSig, IDM_COPY, 0},
-	                                      {"/Edit/_Paste", "<control>V", menuSig, IDM_PASTE, 0},
-	                                      {"/Edit/Duplicat_e", "<control>D", menuSig, IDM_DUPLICATE, 0},
+	                                      {"/Edit/Cu_t", "<Primary>X", menuSig, IDM_CUT, 0},
+	                                      {"/Edit/_Copy", "<Primary>C", menuSig, IDM_COPY, 0},
+	                                      {"/Edit/_Paste", "<Primary>V", menuSig, IDM_PASTE, 0},
+	                                      {"/Edit/Duplicat_e", "<Primary>D", menuSig, IDM_DUPLICATE, 0},
 	                                      {"/Edit/_Delete", "Delete", menuSig, IDM_CLEAR, 0},
-	                                      {"/Edit/Select _All", "<control>A", menuSig, IDM_SELECTALL, 0},
+	                                      {"/Edit/Select _All", "<Primary>A", menuSig, IDM_SELECTALL, 0},
 	                                      {"/Edit/sep2", NULL, NULL, 0, "<Separator>"},
-	                                      {"/Edit/Match _Brace", "<control>E", menuSig, IDM_MATCHBRACE, 0},
-	                                      {"/Edit/Select t_o Brace", "<control><shift>E", menuSig, IDM_SELECTTOBRACE, 0},
-	                                      {"/Edit/S_how Calltip", "<control><shift>space", menuSig, IDM_SHOWCALLTIP, 0},
-	                                      {"/Edit/Complete S_ymbol", "<control>I", menuSig, IDM_COMPLETE, 0},
-	                                      {"/Edit/Complete _Word", "<control>Return", menuSig, IDM_COMPLETEWORD, 0},
-	                                      {"/Edit/Expand Abbre_viation", "<control>B", menuSig, IDM_ABBREV, 0},
-	                                      {"/Edit/_Insert Abbreviation", "<control><shift>R", menuSig, IDM_INS_ABBREV, 0},
+	                                      {"/Edit/Match _Brace", "<Primary>E", menuSig, IDM_MATCHBRACE, 0},
+	                                      {"/Edit/Select t_o Brace", "<Primary><shift>E", menuSig, IDM_SELECTTOBRACE, 0},
+	                                      {"/Edit/S_how Calltip", "<Primary><shift>space", menuSig, IDM_SHOWCALLTIP, 0},
+	                                      {"/Edit/Complete S_ymbol", "<Primary>I", menuSig, IDM_COMPLETE, 0},
+	                                      {"/Edit/Complete _Word", "<Primary>Return", menuSig, IDM_COMPLETEWORD, 0},
+	                                      {"/Edit/Expand Abbre_viation", "<Primary>B", menuSig, IDM_ABBREV, 0},
+	                                      {"/Edit/_Insert Abbreviation", "<Primary><shift>R", menuSig, IDM_INS_ABBREV, 0},
 	                                      {"/Edit/Block Co_mment or Uncomment", "<control>Q", menuSig, IDM_BLOCK_COMMENT, 0},
 	                                      {"/Edit/Bo_x Comment", "<control><shift>B", menuSig, IDM_BOX_COMMENT, 0},
 	                                      {"/Edit/Stream Comme_nt", "<control><shift>Q", menuSig, IDM_STREAM_COMMENT, 0},
@@ -3877,11 +3909,11 @@ void SciTEGTK::CreateMenu() {
 	                                      {"/Edit/Paragraph/_Split", NULL, menuSig, IDM_SPLIT, 0},
 
 	                                      {"/_Search", NULL, NULL, 0, "<Branch>"},
-	                                      {"/Search/_Find...", "<control>F", menuSig, IDM_FIND, 0},
+	                                      {"/Search/_Find...", "<Primary>F", menuSig, IDM_FIND, 0},
 	                                      {"/Search/Find _Next", "F3", menuSig, IDM_FINDNEXT, 0},
 	                                      {"/Search/Find Previou_s", "<shift>F3", menuSig, IDM_FINDNEXTBACK, 0},
-	                                      {"/Search/F_ind in Files...", "<control><shift>F", menuSig, IDM_FINDINFILES, 0},
-	                                      {"/Search/R_eplace...", "<control>H", menuSig, IDM_REPLACE, 0},
+	                                      {"/Search/F_ind in Files...", "<Primary><shift>F", menuSig, IDM_FINDINFILES, 0},
+	                                      {"/Search/R_eplace...", "<Primary>H", menuSig, IDM_REPLACE, 0},
 	                                      {"/Search/Incrementa_l Search", "<control><alt>I", menuSig, IDM_INCSEARCH, 0},
 	                                      {"/Search/Selection A_dd Next", "<control><shift>D", menuSig, IDM_SELECTIONADDNEXT, 0},
 	                                      {"/Search/Selection _Add Each", "", menuSig, IDM_SELECTIONADDEACH, 0},
@@ -4034,7 +4066,9 @@ void SciTEGTK::CreateMenu() {
 	                                          {"/_Help", NULL, NULL, 0, "<Branch>"},
 	                                          {"/Help/_Help", "F1", menuSig, IDM_HELP, 0},
 	                                          {"/Help/_SciTE Help", "", menuSig, IDM_HELP_SCITE, 0},
+#ifndef MAC_INTEGRATION_
 	                                          {"/Help/_About SciTE", "", menuSig, IDM_ABOUT, 0},
+#endif
 	                                      };
 
 	accelGroup = gtk_accel_group_new();
@@ -4941,7 +4975,7 @@ void SciTEGTK::CreateUI() {
 		maximize = true;
 #if GTK_CHECK_VERSION(3,22,0)
 		GdkDisplay *pdisplay = gdk_display_get_default();
-		// gdk_display_get_primary_monitor would be a better call
+		// gdk_display_get_Primary_monitor would be a better call
 		// but that returned NULL on Fedora 25.
 		// There should always be a monitor numbered 0.
 		// At this point, wSciTE hasn't become a real window.
