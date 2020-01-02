@@ -4050,6 +4050,18 @@ void SciTEGTK::CreateMenu() {
 	                                            {"/Buffers/_Close All", "", menuSig, IDM_CLOSEALL, 0},
 	                                            {"/Buffers/_Save All", "", menuSig, IDM_SAVEALL, 0},
 	                                            {"/Buffers/sep2", NULL, NULL, 0, "<Separator>"},
+#ifdef MAC_INTEGRATION
+	                                            {"/Buffers/Buffer0", "<Alt><Primary>1", menuSig, bufferCmdID + 0, "<RadioItem>"},
+	                                            {"/Buffers/Buffer1", "<Alt><Primary>2", menuSig, bufferCmdID + 1, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer2", "<Alt><Primary>3", menuSig, bufferCmdID + 2, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer3", "<Alt><Primary>4", menuSig, bufferCmdID + 3, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer4", "<Alt><Primary>5", menuSig, bufferCmdID + 4, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer5", "<Alt><Primary>6", menuSig, bufferCmdID + 5, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer6", "<Alt><Primary>7", menuSig, bufferCmdID + 6, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer7", "<Alt><Primary>8", menuSig, bufferCmdID + 7, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer8", "<Alt><Primary>9", menuSig, bufferCmdID + 8, "/Buffers/Buffer0"},
+	                                            {"/Buffers/Buffer9", "<Alt><Primary>0", menuSig, bufferCmdID + 9, "/Buffers/Buffer0"},
+#else
 	                                            {"/Buffers/Buffer0", "<alt>1", menuSig, bufferCmdID + 0, "<RadioItem>"},
 	                                            {"/Buffers/Buffer1", "<alt>2", menuSig, bufferCmdID + 1, "/Buffers/Buffer0"},
 	                                            {"/Buffers/Buffer2", "<alt>3", menuSig, bufferCmdID + 2, "/Buffers/Buffer0"},
@@ -4060,6 +4072,7 @@ void SciTEGTK::CreateMenu() {
 	                                            {"/Buffers/Buffer7", "<alt>8", menuSig, bufferCmdID + 7, "/Buffers/Buffer0"},
 	                                            {"/Buffers/Buffer8", "<alt>9", menuSig, bufferCmdID + 8, "/Buffers/Buffer0"},
 	                                            {"/Buffers/Buffer9", "<alt>0", menuSig, bufferCmdID + 9, "/Buffers/Buffer0"},
+#endif // MAC_INTEGRATION
 	                                        };
 
 	SciTEItemFactoryEntry menuItemsHelp[] = {
