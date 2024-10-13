@@ -1183,6 +1183,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_HJA_START",55},
 	{"SCE_HJA_STRINGEOL",66},
 	{"SCE_HJA_SYMBOLS",65},
+	{"SCE_HJA_TEMPLATELITERAL",68},
 	{"SCE_HJA_WORD",61},
 	{"SCE_HJ_COMMENT",42},
 	{"SCE_HJ_COMMENTDOC",44},
@@ -1196,6 +1197,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_HJ_START",40},
 	{"SCE_HJ_STRINGEOL",51},
 	{"SCE_HJ_SYMBOLS",50},
+	{"SCE_HJ_TEMPLATELITERAL",53},
 	{"SCE_HJ_WORD",46},
 	{"SCE_HOLLYWOOD_COMMENT",1},
 	{"SCE_HOLLYWOOD_COMMENTBLOCK",2},
@@ -3957,7 +3959,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3210,
+	ifaceConstantCount = 3212,
 	ifacePropertyCount = 276
 };
 
