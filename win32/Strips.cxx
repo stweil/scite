@@ -198,9 +198,11 @@ void SetWindowPosition(GUI::Window &w, Interval intervalHorizontal, Interval ver
 }
 
 bool MatchAccessKey(const std::string &caption, int key) noexcept {
-	for (size_t i = 0; i < caption.length() - 1; i++) {
-		if ((caption[i] == '&') && (MakeUpperCase(caption[i + 1]) == key)) {
-			return true;
+	if (!caption.empty()) {
+		for (size_t i = 0; i < caption.length() - 1; i++) {
+			if ((caption[i] == '&') && (MakeUpperCase(caption[i + 1]) == key)) {
+				return true;
+			}
 		}
 	}
 	return false;
