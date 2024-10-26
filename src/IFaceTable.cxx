@@ -1584,6 +1584,22 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_NIM_TRIPLE",9},
 	{"SCE_NIM_TRIPLEDOUBLE",10},
 	{"SCE_NIM_WORD",8},
+	{"SCE_NIX_COMMENTBLOCK",2},
+	{"SCE_NIX_COMMENTLINE",1},
+	{"SCE_NIX_DEFAULT",0},
+	{"SCE_NIX_ESCAPECHAR",5},
+	{"SCE_NIX_IDENTIFIER",6},
+	{"SCE_NIX_KEY",10},
+	{"SCE_NIX_KEYWORD1",12},
+	{"SCE_NIX_KEYWORD2",13},
+	{"SCE_NIX_KEYWORD3",14},
+	{"SCE_NIX_KEYWORD4",15},
+	{"SCE_NIX_NUMBER",9},
+	{"SCE_NIX_OPERATOR",7},
+	{"SCE_NIX_OPERATOR_STRING",8},
+	{"SCE_NIX_PATH",11},
+	{"SCE_NIX_STRING",3},
+	{"SCE_NIX_STRING_MULTILINE",4},
 	{"SCE_NNCRONTAB_ASTERISK",6},
 	{"SCE_NNCRONTAB_COMMENT",1},
 	{"SCE_NNCRONTAB_DEFAULT",0},
@@ -2949,6 +2965,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCLEX_MYSQL",89},
 	{"SCLEX_NIM",126},
 	{"SCLEX_NIMROD",96},
+	{"SCLEX_NIX",140},
 	{"SCLEX_NNCRONTAB",26},
 	{"SCLEX_NSIS",43},
 	{"SCLEX_NULL",1},
@@ -3959,7 +3976,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3212,
+	ifaceConstantCount = 3229,
 	ifacePropertyCount = 276
 };
 
