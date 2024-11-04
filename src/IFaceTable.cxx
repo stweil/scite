@@ -666,6 +666,19 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_CMAKE_USERDEFINED",8},
 	{"SCE_CMAKE_VARIABLE",7},
 	{"SCE_CMAKE_WHILEDEF",9},
+	{"SCE_COBOL_CHARACTER",7},
+	{"SCE_COBOL_COMMENT",1},
+	{"SCE_COBOL_COMMENTDOC",3},
+	{"SCE_COBOL_COMMENTLINE",2},
+	{"SCE_COBOL_DEFAULT",0},
+	{"SCE_COBOL_IDENTIFIER",11},
+	{"SCE_COBOL_NUMBER",4},
+	{"SCE_COBOL_OPERATOR",10},
+	{"SCE_COBOL_PREPROCESSOR",9},
+	{"SCE_COBOL_STRING",6},
+	{"SCE_COBOL_WORD",5},
+	{"SCE_COBOL_WORD2",16},
+	{"SCE_COBOL_WORD3",8},
 	{"SCE_COFFEESCRIPT_CHARACTER",7},
 	{"SCE_COFFEESCRIPT_COMMENT",1},
 	{"SCE_COFFEESCRIPT_COMMENTBLOCK",22},
@@ -2370,6 +2383,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_ZIG_ESCAPECHAR",9},
 	{"SCE_ZIG_FUNCTION",11},
 	{"SCE_ZIG_IDENTIFIER",10},
+	{"SCE_ZIG_IDENTIFIER_STRING",17},
 	{"SCE_ZIG_KW_PRIMARY",13},
 	{"SCE_ZIG_KW_SECONDARY",14},
 	{"SCE_ZIG_KW_TERTIARY",15},
@@ -3976,7 +3990,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3229,
+	ifaceConstantCount = 3243,
 	ifacePropertyCount = 276
 };
 
