@@ -1967,6 +1967,8 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCE_RUST_COMMENTBLOCKDOC",3},
 	{"SCE_RUST_COMMENTLINE",2},
 	{"SCE_RUST_COMMENTLINEDOC",4},
+	{"SCE_RUST_CSTRING",24},
+	{"SCE_RUST_CSTRINGR",25},
 	{"SCE_RUST_DEFAULT",0},
 	{"SCE_RUST_IDENTIFIER",17},
 	{"SCE_RUST_LEXERROR",20},
@@ -3990,7 +3992,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3243,
+	ifaceConstantCount = 3245,
 	ifacePropertyCount = 276
 };
 
