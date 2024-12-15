@@ -629,7 +629,7 @@
 	<li>SciTE</li>
 	<ul>
 		<li>
-		Released 19 October 2024.
+		Released 18 December 2024.
 		</li>
 		<li>
 		Fix crash on Win32 in strip handling when matching a keypress to a caption which is empty.
@@ -649,6 +649,11 @@
 		JavaScript: Use correct SCE_HJA_TEMPLATELITERAL style for server-side template literals in
 		HTML instead of client-side style.
 		<a href="https://github.com/ScintillaOrg/lexilla/issues/286">Issue #286</a>.
+		</li>
+		<li>
+		JavaScript: Use correct SCE_HJ_SYMBOLS style for '.' after regex instead of SCE_HJ_WORD.
+		Prevent empty word assertion when non-word character after regex flag.
+		<a href="https://github.com/ScintillaOrg/lexilla/issues/289">Issue #289</a>.
 		</li>
 		<li>
 		PHP: Fix unstable lexing with substyled keyword and unterminated string.
