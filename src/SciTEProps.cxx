@@ -1363,6 +1363,10 @@ void SciTEBase::ReadProperties() {
 		// insert and delete events.
 	}
 
+	const bool undoSelectionHistory = props.GetInt("undo.selection.history", 1);
+	wEditor.SetSelectionUndoHistory(undoSelectionHistory);
+	wOutput.SetSelectionUndoHistory(undoSelectionHistory);
+
 	// Create a margin column for the folding symbols
 	wEditor.SetMarginTypeN(2, SA::MarginType::Symbol);
 
