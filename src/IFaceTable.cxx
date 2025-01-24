@@ -2605,7 +2605,6 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCI_GETSELECTIONNSTARTVIRTUALSPACE",2726},
 	{"SCI_GETSELECTIONS",2570},
 	{"SCI_GETSELECTIONSTART",2143},
-	{"SCI_GETSELECTIONUNDOHISTORY",2783},
 	{"SCI_GETSELEOLFILLED",2479},
 	{"SCI_GETSTATUS",2383},
 	{"SCI_GETSTYLEAT",2010},
@@ -2634,6 +2633,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCI_GETUNDOCURRENT",2798},
 	{"SCI_GETUNDODETACH",2794},
 	{"SCI_GETUNDOSAVEPOINT",2792},
+	{"SCI_GETUNDOSELECTIONHISTORY",2783},
 	{"SCI_GETUNDOSEQUENCE",2799},
 	{"SCI_GETUNDOTENTATIVE",2796},
 	{"SCI_GETUSETABS",2125},
@@ -2812,7 +2812,6 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCI_SETSELECTIONNEND",2586},
 	{"SCI_SETSELECTIONNSTART",2584},
 	{"SCI_SETSELECTIONSTART",2142},
-	{"SCI_SETSELECTIONUNDOHISTORY",2782},
 	{"SCI_SETSELEOLFILLED",2480},
 	{"SCI_SETSTATUS",2382},
 	{"SCI_SETTABDRAWMODE",2699},
@@ -2828,6 +2827,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SCI_SETUNDOCURRENT",2797},
 	{"SCI_SETUNDODETACH",2793},
 	{"SCI_SETUNDOSAVEPOINT",2791},
+	{"SCI_SETUNDOSELECTIONHISTORY",2782},
 	{"SCI_SETUNDOTENTATIVE",2795},
 	{"SCI_SETUSETABS",2124},
 	{"SCI_SETVIEWEOL",2356},
@@ -3338,6 +3338,8 @@ static IFaceConstant ifaceConstants[] = {
 	{"SC_TYPE_BOOLEAN",0},
 	{"SC_TYPE_INTEGER",1},
 	{"SC_TYPE_STRING",2},
+	{"SC_UNDO_SELECTION_HISTORY_DISABLED",0},
+	{"SC_UNDO_SELECTION_HISTORY_ENABLED",1},
 	{"SC_UPDATE_CONTENT",0x1},
 	{"SC_UPDATE_H_SCROLL",0x8},
 	{"SC_UPDATE_NONE",0x0},
@@ -3927,7 +3929,6 @@ static IFaceProperty ifaceProperties[] = {
 	{"SelectionNStart", 2585, 2584, iface_position, iface_int},
 	{"SelectionNStartVirtualSpace", 2726, 0, iface_position, iface_int},
 	{"SelectionStart", 2143, 2142, iface_position, iface_void},
-	{"SelectionUndoHistory", 2783, 2782, iface_bool, iface_void},
 	{"Selections", 2570, 0, iface_int, iface_void},
 	{"Status", 2383, 2382, iface_int, iface_void},
 	{"StyleAt", 2010, 0, iface_int, iface_position},
@@ -3974,6 +3975,7 @@ static IFaceProperty ifaceProperties[] = {
 	{"UndoCurrent", 2798, 2797, iface_int, iface_void},
 	{"UndoDetach", 2794, 2793, iface_int, iface_void},
 	{"UndoSavePoint", 2792, 2791, iface_int, iface_void},
+	{"UndoSelectionHistory", 2783, 2782, iface_int, iface_void},
 	{"UndoSequence", 2799, 0, iface_int, iface_void},
 	{"UndoTentative", 2796, 2795, iface_int, iface_void},
 	{"UseTabs", 2125, 2124, iface_bool, iface_void},
@@ -3995,7 +3997,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3247,
+	ifaceConstantCount = 3249,
 	ifacePropertyCount = 277
 };
 
