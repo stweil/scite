@@ -1387,12 +1387,16 @@ void SciTEBase::RemoveFileFromStack(const FilePath &file) {
 }
 
 FilePosition SciTEBase::GetFilePosition() {
-	return FilePosition(GetSelectedRange(), GetCurrentScrollPosition());
+	return FilePosition(GetSelectedRange(), GetCurrentScrollPosition(), wEditor.SelectionSerialized());
 }
 
 void SciTEBase::DisplayAround(const FilePosition &fp) {
 	if ((fp.selection.position != SA::InvalidPosition) && (fp.selection.anchor != SA::InvalidPosition)) {
-		SetSelection(fp.selection.anchor, fp.selection.position);
+		if (fp.selectionDetails.empty()) {
+			SetSelection(fp.selection.anchor, fp.selection.position);
+		} else {
+			wEditor.SetSelectionSerialized(fp.selectionDetails.c_str());
+		}
 
 		const SA::Line curTop = wEditor.FirstVisibleLine();
 		const SA::Line lineTop = wEditor.VisibleFromDocLine(fp.scrollPosition);

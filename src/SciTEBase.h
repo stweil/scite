@@ -44,9 +44,10 @@ struct SelectedRange {
 struct FilePosition {
 	SelectedRange selection;
 	SA::Line scrollPosition = 0;
+	std::string selectionDetails;
 	FilePosition() = default;
-	FilePosition(SelectedRange selection_, SA::Line scrollPosition_) noexcept :
-		selection(selection_), scrollPosition(scrollPosition_) {
+	FilePosition(SelectedRange selection_, SA::Line scrollPosition_, std::string_view details="") noexcept :
+		selection(selection_), scrollPosition(scrollPosition_), selectionDetails(details) {
 	}
 };
 

@@ -632,6 +632,13 @@
 		<li>
 		Released 18 December 2024.
 		</li>
+		<li>
+		Remember selection with undo and redo. Controlled with undo.selection.history property.
+		</li>
+		<li>
+		Remember multiple and rectangular selction when switching buffers.
+		<a href="https://sourceforge.net/p/scintilla/bugs/2018/">Bug #2018</a>.
+		</li>
 	</ul>
 	<li>Lexilla 5.4.3</li>
 	<ul>
@@ -667,6 +674,9 @@
 		<a href="https://sourceforge.net/p/scintilla/feature-requests/1273/">Feature #1273</a>,
 		<a href="https://sourceforge.net/p/scintilla/bugs/1479/">Bug #1479</a>,
 		<a href="https://sourceforge.net/p/scintilla/bugs/1224/">Bug #1224</a>.
+		</li>
+		<li>
+		Serialize selection type and ranges with SCI_GETSELECTIONSERIALIZED and SCI_SETSELECTIONSERIALIZED.
 		</li>
 		<li>
 		Fix bug on Qt where double-click stopped working when Scintilla instance had been running for weeks.
