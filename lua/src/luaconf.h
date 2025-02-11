@@ -788,6 +788,7 @@
 #pragma clang diagnostic ignored "-Wconversion"
 #pragma clang diagnostic ignored "-Wcomma"
 #pragma clang diagnostic ignored "-Wstring-plus-int"
+#pragma clang diagnostic ignored "-Wcast-function-type-mismatch"
 #endif
 
 #endif
