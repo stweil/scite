@@ -3336,6 +3336,7 @@ static IFaceConstant ifaceConstants[] = {
 	{"SC_TECHNOLOGY_DIRECTWRITE",1},
 	{"SC_TECHNOLOGY_DIRECTWRITEDC",3},
 	{"SC_TECHNOLOGY_DIRECTWRITERETAIN",2},
+	{"SC_TECHNOLOGY_DIRECT_WRITE_1",4},
 	{"SC_TIME_FOREVER",10000000},
 	{"SC_TYPE_BOOLEAN",0},
 	{"SC_TYPE_INTEGER",1},
@@ -4000,7 +4001,7 @@ static IFaceProperty ifaceProperties[] = {
 
 enum {
 	ifaceFunctionCount = 333,
-	ifaceConstantCount = 3251,
+	ifaceConstantCount = 3252,
 	ifacePropertyCount = 278
 };
 
